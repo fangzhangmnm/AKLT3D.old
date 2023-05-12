@@ -1,0 +1,11 @@
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4306868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.43068679350977146}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4326868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.43268679350977146}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4346868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.43468679350977146}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4366868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.43668679350977146}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4386868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.43868679350977147}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4406868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.44068679350977147}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4426868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.44268679350977147}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4446868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.44468679350977147}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4466868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.4466867935097715}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4486868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.4486867935097715}" --device cuda:1
+python HOTRG_run.py --filename data/ising2d_gilt_X16_scan_params/beta_0.4506868.pt --nLayers 60 --max_dim 16 --gilt_enabled --mcf_enabled  --model Ising2D --params "{'beta': 0.4506867935097715}" --device cuda:1
