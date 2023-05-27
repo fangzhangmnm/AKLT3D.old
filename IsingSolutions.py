@@ -60,7 +60,7 @@ class Ising2DExactSolution:
         plt.show()
         print('critical_beta',self.critical_beta)
      
-ising2d=Ising2DExactSolution()
+ising2d_exact=Ising2DExactSolution()
 
 #class FromCriticalExponent:
     
@@ -93,9 +93,9 @@ class Ising3DMonteCarlo:
         print('critical_beta',self.critical_beta)
        
 
-ising3d=Ising3DMonteCarlo()
+ising3d_monte_carlo=Ising3DMonteCarlo()
 
-__all__=['relerr','abserr','ising2d','ising3d']
+__all__=['relerr','abserr','ising2d_exact','ising3d_monte_carlo']
 
 if __name__=="__main__":
-    ising2d.display()
+    ising2d_exact.display()

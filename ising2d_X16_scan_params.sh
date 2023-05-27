@@ -1,0 +1,10 @@
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4306868.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.43068679350977146}" --device cuda:0
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4329090.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.4329090157319937}" --device cuda:0
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4351312.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.43513123795421593}" --device cuda:0
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4373535.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.4373534601764381}" --device cuda:0
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4395757.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.43957568239866035}" --device cuda:0
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4417979.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.4417979046208826}" --device cuda:0
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4440201.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.4440201268431048}" --device cuda:0
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4462423.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.446242349065327}" --device cuda:0
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4484646.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.44846457128754924}" --device cuda:0
+python HOTRG_run.py --filename data/ising2d_X16_scan_params/beta_0.4506868.pt --nLayers 60 --max_dim 16 --mcf_enabled  --model Ising2D --params "{'beta': 0.4506867935097715}" --device cuda:0

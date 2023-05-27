@@ -61,7 +61,7 @@ class MCF_options:
     enabled:bool=True
     eps:float=1e-6
     max_iter:int=50
-    # enabled_unitary:bool=True
+    fix_unitary_enabled:bool=True
     phase_iter1:int=3
     phase_iter2:int=10
 
@@ -132,25 +132,27 @@ def fix_unitary_gauge_svd(T,Tref,nIter=10):
 def fix_unitary_gauge(T,Tref,options:MCF_options=MCF_options()):
     spacial_dim=len(T.shape)//2
     hs=[torch.eye(T.shape[i]) for i in range(spacial_dim*2)]
-    if Tref is not None and T.shape==Tref.shape:
-        for iIter1 in range(options.phase_iter1):
-            ds=[torch.ones(T.shape[i]) for i in range(2*spacial_dim)]
-            for iIter2 in range(1,max(T.shape)):
-                iBondDim=iIter2%max(T.shape)
-                for iDim in range(spacial_dim):
-                    slices=[slice(iBondDim)]*2*spacial_dim;slices[2*iDim]=slice(None)
-                    TT,TTref=T[slices],Tref[slices] # :,:i,:i,:i,:i,:i or :i,:i,:,:i,:i,:i or :i,:i,:i,:i,:,:i
-                    eq1='ijklmn'[:2*spacial_dim]
-                    eq2='ijklmn'[2*iDim]
-                    rho=contract(eq1+','+eq1+'->'+eq2,TT,TTref)# ijklmn,ijklmn->i or k or m
-                    di=torch.where(rho>0,1.,-1.)
-                    ds[2*iDim],ds[2*iDim+1]=ds[2*iDim]*di,ds[2*iDim+1]*di
-                    T=apply_vector_to_leg(T,di,2*iDim)
-                    T=apply_vector_to_leg(T,di,2*iDim+1)
+    if options.fix_unitary_enabled:
+        # print('fix_unitary_gauge')
+        if Tref is not None and T.shape==Tref.shape:
+            for iIter1 in range(options.phase_iter1):
+                ds=[torch.ones(T.shape[i]) for i in range(2*spacial_dim)]
+                for iIter2 in range(1,max(T.shape)):
+                    iBondDim=iIter2%max(T.shape)
+                    for iDim in range(spacial_dim):
+                        slices=[slice(iBondDim)]*2*spacial_dim;slices[2*iDim]=slice(None)
+                        TT,TTref=T[slices],Tref[slices] # :,:i,:i,:i,:i,:i or :i,:i,:,:i,:i,:i or :i,:i,:i,:i,:,:i
+                        eq1='ijklmn'[:2*spacial_dim]
+                        eq2='ijklmn'[2*iDim]
+                        rho=contract(eq1+','+eq1+'->'+eq2,TT,TTref)# ijklmn,ijklmn->i or k or m
+                        di=torch.where(rho>0,1.,-1.)
+                        ds[2*iDim],ds[2*iDim+1]=ds[2*iDim]*di,ds[2*iDim+1]*di
+                        T=apply_vector_to_leg(T,di,2*iDim)
+                        T=apply_vector_to_leg(T,di,2*iDim+1)
 
-            hs=[torch.diag(di)@h for di,h in zip(ds,hs)]
-            T,hs1=fix_unitary_gauge_svd(T,Tref,nIter=options.phase_iter2)
-            hs=[h1@h for h1,h in zip(hs1,hs)]
+                hs=[torch.diag(di)@h for di,h in zip(ds,hs)]
+                T,hs1=fix_unitary_gauge_svd(T,Tref,nIter=options.phase_iter2)
+                hs=[h1@h for h1,h in zip(hs1,hs)]
     return T,hs
 
 def minimal_canonical_form(T:torch.Tensor,options:MCF_options=MCF_options())->'tuple[torch.Tensor,list[torch.Tensor]]':

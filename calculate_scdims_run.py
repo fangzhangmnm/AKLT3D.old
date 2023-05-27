@@ -12,7 +12,7 @@ parser.add_argument('--output_eigvecs', action='store_true')
 parser.add_argument('--output_eigvecs_dir', type=str,default=None)
 parser.add_argument('--output_eigvecs_filename_postfix', type=str,default='_eigs.pt')
 
-parser.add_argument('--n', type=int, default=2, help='chain length')
+parser.add_argument('--n', type=int, nargs='+', default=(2,), help='chain length')
 parser.add_argument('--k', type=int, default=10, help='number of eigenvalues to compute')
 
 parser.add_argument('--device', type=str, default='cuda:0')
@@ -53,10 +53,13 @@ for input_filename in tqdm(options.pop('input_filenames')):
     options={**tensor_data['options'],**options}
     params,layers,Ts,logTotals=tensor_data['params'],tensor_data['layers'],tensor_data['Ts'],tensor_data['logTotals']
 
+    spacial_dim=Ts[0].shape[0]
+
     data=[]
     for iLayer in tqdm(range(len(Ts)),leave=False):
         T=Ts[iLayer]
-        scdims,eigvecs=get_scdims(T,n=options['n'],k=options['k'])
+        scdims,eigvecs=get_scdims(T,n=options['n'],k=options['k'],
+                                  tensor_block_height=(1 if iLayer%spacial_dim==0 else .5))
         data.append({
             **params,
             'max_dim':options['max_dim'],

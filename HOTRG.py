@@ -77,11 +77,12 @@ def forward_layer(Ta,Tb,layer:HOTRGLayer,use_checkpoint=False)->torch.Tensor:
     return _checkpoint(_forward_layer,[Ta,Tb],{'layer':layer},use_checkpoint=use_checkpoint)
 
 def cg_tensor_norm(T):
-    contract_path={4:'iijj->',5:'iijjk->k',6:'iijjkk->',7:'iijjkkl->l'}[len(T.shape)]
+    contract_path={4:'iijj->',6:'iijjkk->'}[len(T.shape)]
     norm=contract(contract_path,T).norm()
-    if norm<1e-6:#fallback
+    if norm<1e-6*T.norm():#fallback
+        # print('cg_tensor_norm: fallback',T.shape)
         norm=T.norm()
-    #norm=T.norm()
+    # norm=T.norm()
     #print(norm)
     return norm
     
@@ -274,14 +275,14 @@ def HOTRG_layer(T1,T2,max_dim,options:dict={},Tref=None):
     gilt_options=GILT_options(**{k[5:]:v for k,v in options.items() if k[:5]=='gilt_'})
     mcf_options=MCF_options(**{k[4:]:v for k,v in options.items() if k[:4]=='mcf_'})
 
-    T1,T2,gg=GILT_HOTRG(T1,T2,options=gilt_options)
+    T1,T2,gg=GILT_HOTRG(T1,T2,options=gilt_options) if gilt_options.enabled else (T1,T2,None)
     
     Tn,layer=HOSVD_layer(T1,T2,max_dim=max_dim)
     layer.gg=gg
     
     Tn,hh=minimal_canonical_form(Tn,options=mcf_options)
     if Tref is not None and Tn.shape==Tref.shape:
-        Tn,hh1=fix_unitary_gauge(Tn,Tref)
+        Tn,hh1=fix_unitary_gauge(Tn,Tref,options=mcf_options)
         hh=[h1@h for h1,h in zip(hh1,hh)]
 
     if hh is not None:
@@ -303,6 +304,7 @@ def HOTRG_layers(T0,max_dim,nLayers,options:dict={}):
     layers=[]
     for iLayer in tqdm(list(range(nLayers)),leave=False):
         norm=cg_tensor_norm(T)
+        # print(norm)
         T=T/norm
         logTotal=2*(logTotal+norm.log())
         

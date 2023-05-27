@@ -15,7 +15,7 @@ def get_w_HOSVD(MM:torch.Tensor,max_dim):
     # w MM wh
     #S,U=torch.linalg.eigh(MM)#ascending, U S Uh=MM #will fail when there's a lot of zero eigenvalues
     #S,U=S.flip(0),U.flip(-1)
-    U,S,Vh=svd(MM)
+    U,S,Vh=svd(MM,driver='gesvd') #descending, U S Vh=MM #we need precision and consistency, so use gesvd instead of gesvdj
     w=(U.T)[:max_dim]
     return w
 
